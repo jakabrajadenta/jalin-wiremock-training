@@ -25,10 +25,8 @@ public class MainTest {
 
         stubFor(get(urlEqualTo("/test/bodyFile"))
                 .willReturn(aResponse().withBodyFile("output.json")));
-
         stubFor(get(urlMatching("/test/.*")).atPriority(10)
                 .willReturn(aResponse().withStatus(401)));
-
         stubFor(get(urlEqualTo("/test/abc"))
                 .willReturn(aResponse()
                         .withHeader("x-trace-id","abc")
@@ -36,15 +34,10 @@ public class MainTest {
                         .withHeader("x-token","ghi")
                         .withHeader("x-array", "jkl", "mno")
                         .withBody("Test success!")));
-
         stubFor(delete("/test/delete").willReturn(okJson("Deleted!")));
-
         stubFor(get("/test/get").willReturn(okJson("{\"name\": \"John\"}")));
-
         stubFor(post("/test/post").withRequestBody(equalToJson("{\"name\":\"Hendro\"}")).willReturn(okJson("Posted!")));
-
         stubFor(post("/test/unauthorized").willReturn(unauthorized()));
-
         stubFor(put("/test/status-only").willReturn(status(418)));
 
         client = new OkHttpClient();
